@@ -4,10 +4,10 @@ Ich habe mit einem [Blogbeitrag](https://finsteininvest.pythonanywhere.com/) Dei
 
 Hier beschreibe ich, was Du installieren und machen musst.
 
-##1. Installiere Python
+## 1. Installiere Python
 Lade und installiere Python von [hier](https://www.python.org/downloads/) herunter. Bitte auf jeden Fall Python 3 installieren!
 
-##2. Erzeuge eine virtuelle Umgebung
+## 2. Erzeuge eine virtuelle Umgebung
 Im Kern besteht der Hauptzweck der virtuellen Umgebungen von Python darin, eine isolierte Umgebung für Python-Projekte zu schaffen. Das bedeutet, dass jedes Projekt seine eigenen Abhängigkeiten haben kann, unabhängig davon, welche Abhängigkeiten jedes andere Projekt hat.
 
 Jetzt musst Du eine Kommandozeile öffnen.
@@ -35,12 +35,12 @@ Um die Umgebung zu aktivieren musst Du:
 - Windows: activate
 - Mac: source ./activate
 
-##3. Den Code beschaffen
+## 3. Den Code beschaffen
 Der Code zu einem Blogbeitrag befindet sich gesammelt in einem Verzeichnis mit dem gleichen Titel, wie der Blogbeitrag.
 
 Navigiere in das Verzeichnis und klick auf die verschiedenen .py Deteien. Dann auf "RAW"; rechts, oberhalb der Datei. In einem Verzeichnis auf Deinem Rechner speichern. Das machst Du für alle Dateien, die mit .py enden.
 
-##4. Installiere notwendige Module
+## 4. Installiere notwendige Module
 In dem gleichen Verzeichnis findest Du auch eine Datei mit dem Namen "notwendige module.txt"
 
 In dieser findest Du Kommandos in der Art:
@@ -51,7 +51,7 @@ Mit pip installierst Du die notwendigen Bibliotheken, um meinen Code auszuführe
 
 Auf der Kommandozeile musst Du jede einzelne Zeile eingeben und mit "Return" die Bibliothek installieren lassen. ** Nicht vergessen: vorher die virtuelle Umgebung aktivieren. **
 
-##5. Code ausführen
+## 5. Code ausführen
 Im [Blog](https://finsteininvest.pythonanywhere.com/) steht in jedem Beitrag in welcher Reihenfolge, welches Programm ausgeführt werden soll.
 
 Dazu: python3 name_des_programms.py eingeben. Manchmal müssen noch Parameter eingegeben werden; aber das gebe ich Blogbeitrag an.
