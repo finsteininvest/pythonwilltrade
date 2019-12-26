@@ -39,14 +39,14 @@ gdf_T6 = geopandas.GeoDataFrame(lagen_T6, geometry=geopandas.points_from_xy(lage
 deutschland = geopandas.read_file("4_niedrig.geojson")
 #https://matplotlib.org/3.1.0/gallery/color/named_colors.html
 ax = deutschland.plot(color='white', edgecolor='black')
-gdf_T0.plot(ax=ax, color='darkgreen', label="1-1.99€/qm")
-gdf_T1.plot(ax=ax, color='limegreen', label = "2-2.99€/qm")
-gdf_T2.plot(ax=ax, color='navy', label = "3-3.99€/qm")
-gdf_T3.plot(ax=ax, color='violet' , label="4-4.99€/qm")
-gdf_T4.plot(ax=ax, color='cornflowerblue', label = "5-5.99€/qm")
-gdf_T5.plot(ax=ax, color='yellow', label = "6-6.99€/qm")
-gdf_T6.plot(ax=ax, color='red', label = "7€ und mehr/qm")
-ax.legend(loc="lower right", title="", frameon=False)
+gdf_T0.plot(ax=ax, color='darkgreen', markersize = 10, label="1-1.99€/qm")
+gdf_T1.plot(ax=ax, color='limegreen', markersize = 20, label = "2-2.99€/qm")
+gdf_T2.plot(ax=ax, color='navy', markersize = 30, label = "3-3.99€/qm")
+gdf_T3.plot(ax=ax, color='violet' , markersize = 40, label="4-4.99€/qm")
+gdf_T4.plot(ax=ax, color='cornflowerblue', markersize = 50, label = "5-5.99€/qm")
+gdf_T5.plot(ax=ax, color='yellow', markersize = 60, label = "6-6.99€/qm")
+gdf_T6.plot(ax=ax, color='red', markersize = 70, label = "7€ und mehr/qm")
+ax.legend(loc="top left", title="", frameon=False)
 
 
 plt.show()
