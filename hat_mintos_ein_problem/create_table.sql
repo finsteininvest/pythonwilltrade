@@ -1,0 +1,22 @@
+CREATE TABLE mintos_data(
+  "Id" TEXT,
+  "Issue Date" TEXT,
+  "Closing Date" TEXT,
+  "Listing Date" TEXT,
+  "Country" TEXT,
+  "Loan Originator" TEXT,
+  "Mintos Rating" TEXT,
+  "Loan Type" TEXT,
+  "Loan Rate Percent" TEXT,
+  "Term" TEXT,
+  "Collateral" TEXT,
+  "Initial LTV" TEXT,
+  "LTV" TEXT,
+  "Loan Status" TEXT,
+  "Buyback reason" TEXT,
+  "Initial Loan Amount" NUMERIC,
+  "Remaining Loan Amount" NUMERIC,
+  "Currency" TEXT,
+  "Buyback" TEXT,
+  "Extendable schedule" TEXT
+);
