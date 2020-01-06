@@ -1,0 +1,6 @@
+pip install sqlite3
+pip install matplotlib
+pip install tabulate
+pip install pandas
+
+Siehe auch: 
