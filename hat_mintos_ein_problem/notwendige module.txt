@@ -3,4 +3,4 @@ pip install matplotlib
 pip install tabulate
 pip install pandas
 
-Siehe auch: 
+Siehe auch: https://github.com/finsteininvest/pythonwilltrade/tree/master/Wie_Du_mein_Code_zum_laufen_bekommst
