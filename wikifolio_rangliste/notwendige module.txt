@@ -1,1 +1,3 @@
-pip install ...
+pip install BeautifulSoup
+pip install argparse
+pip install PrettyTable
