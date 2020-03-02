@@ -21,7 +21,8 @@ def get_symbols_list(debug=False):
 		symbols, symbol name, latest quote (price)
 		and exchange
 		from the site.
-		Columns are: symbol, name, price, exchange
+		Columns are: 
+			symbol, name, price, exchange
 		Index is set to symbol
 	'''
 	r = requests.get('https://financialmodelingprep.com/api/v3/company/stock/list')
@@ -52,7 +53,26 @@ def get_symbols_list(debug=False):
 	symbols = symbols.set_index('symbol')
 	return symbols
 
-def get_historic_values(symbol)
+def get_historic_values(symbol, type, debug = False):
 	'''
+		Retrieves a dataframe for a given symbol and type.
+
+		Index is set to date.
+
+		Possible type(s)
+		- empty = stock
+		- index/
+		- crypto/
+
 	'''
+	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}')
+	historic_list = json.loads(r.text)
+	if debug == True:
+		for entry in historic_list['historical']:
+			print(entry['date'])
+
+	historic_values = pd.DataFrame.from_dict(historic_list['historical'])
+	historic_values = historic_values.sort_values(by=['date'])
+	historic_values = historic_values.set_index('date')
+
 	return historic_values
