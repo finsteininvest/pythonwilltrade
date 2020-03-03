@@ -134,12 +134,3 @@ if args.save:
 	plt.savefig(file_name, format='png', dpi=300)
 if args.plot:
 	plt.show()
-
-print(df.iloc[-1])
-#^GDAXI = Dax
-#^N225 = Nikkei
-#^FTSE = FTSE 100
-#^FCHI = CAC40
-#^DJI = Dow Jones
-#^GSPC = S&P500
-#^IXIC = Nasdaq
