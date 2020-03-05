@@ -1,1 +1,3 @@
-tbd
+pip install pandas
+pip install BeautifulSoup
+pip install argparse
