@@ -8,6 +8,8 @@
 
 
 	Erstellt: März 2020
+	Update: 07.03.2020
+		- Aktien werden nach Dividendenrendite sortiert.
 '''
 
 import requests
@@ -32,7 +34,7 @@ for asset in assets:
 	symbol = spalten[0].find("div", class_ = "ticker-area").text
 	name = spalten[0].find("div", class_ = "title-area").text
 	asset_type = spalten[1].text
-	div_yield = spalten[2].text
+	div_yield = float(spalten[2].text.replace('%',''))
 	eps =  spalten[6].text
 	pe_ratio =  spalten[7].text
 	asset_list.append([symbol, name, asset_type, div_yield, eps, pe_ratio])
@@ -42,6 +44,7 @@ df_assets = pd.DataFrame.from_records(asset_list, columns = asset_labels)
 
 if args.stocks:
 	df_assets = df_assets[df_assets['asset_type']=='Stock']
+	df_assets = df_assets.sort_values(by = ['div_yield'], ascending=False)
 	print(df_assets.to_string())
 else:
 	print(df_assets.to_string())
