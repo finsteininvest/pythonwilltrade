@@ -1,1 +1,4 @@
-.
+pip install requests
+pip install argparse
+pip install pandas
+pip install BeautifulSoup
