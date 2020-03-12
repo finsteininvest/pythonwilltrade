@@ -6,7 +6,7 @@
 	herunterzuladen.
 
 	Erstellt: 1. März 2020
-	Erweitert: 10. März 2020
+	Erweitert: 12. März 2020
 
 	https://finsteininvest.pythonanywhere.com/
 	https://github.com/finsteininvest/pythonwilltrade/tree/master/fmp
