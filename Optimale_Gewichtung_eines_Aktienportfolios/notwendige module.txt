@@ -1,1 +1,15 @@
-...
+pip install bs4
+pip install numpy
+pip install quantstats
+pip install argparse
+pip install os
+pip install re
+pip install requests
+pip install json
+pip install pickle
+pip install time
+pip install datetime
+pip install pandas
+pip install matplotlib
+
+Siehe auch: https://github.com/finsteininvest/pythonwilltrade/tree/master/Wie_Du_mein_Code_zum_laufen_bekommst
