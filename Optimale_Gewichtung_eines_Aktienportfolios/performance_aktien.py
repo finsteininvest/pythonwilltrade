@@ -59,7 +59,7 @@ def lade_symbol_datei(dateiname):
 def lade_kurse_stooq(symbol_liste):
     '''
         Funktion, um Kurse von
-        Yahoo Finance herunterzuladen.
+        Stooq herunterzuladen.
         Kurse werden in einer CSV Datei gespeichert.
         Bsp. [symbol].csv
     '''
