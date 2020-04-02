@@ -1,1 +1,3 @@
 fmp.py aus dem fmp Verzeichnis
+get_sp_500.py aus "von_guenstig_bis_nicht" Verzeichnis
+get_sp_500_dcf.py aus "von_guenstig_bis_nicht" Verzeichnis
