@@ -10,10 +10,13 @@
 	Erweitert: 23. März 2020
 		- creation_date_today
 		- check_cache
-		- alle funktionen nutzen nun check_cache.
+		- einige Funktionen nutzen nun check_cache.
 		  In Vorbereitung zur Nutzung mit FMP Dashboard
 	Erweitert: 01. April 2020
 		- Neu get_balance_sheet
+	Reweitert: 
+		- Neue Funktionen
+		- Weiter Funktionen nutzen nun check_cache.
 
 	https://finsteininvest.pythonanywhere.com/
 	https://github.com/finsteininvest/pythonwilltrade/tree/master/fmp
@@ -119,7 +122,7 @@ def get_historic_values(symbol, type, debug = False):
 		- crypto/
 
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}')
 	historic_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_list['historical']:
@@ -138,7 +141,7 @@ def get_historic_eps(symbol, debug=False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}')
 	historic_eps_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_eps_list['financials']:
@@ -157,7 +160,7 @@ def get_historic_roe(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}')
 	historic_roe_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_roe_value_list['metrics']:
@@ -165,6 +168,7 @@ def get_historic_roe(symbol, debug = False):
 	historic_roe_values = pd.DataFrame.from_dict(historic_roe_value_list['metrics'])
 	historic_roe_values = historic_roe_values.sort_values(by=['date'])
 	historic_roe_values = historic_roe_values[['date', 'ROE']]
+	historic_roe_values['ROE'] = historic_roe_values['ROE'].astype(float) * 100
 	historic_roe_values = historic_roe_values.set_index('date')
 
 	return historic_roe_values
@@ -228,12 +232,9 @@ def get_balance_sheet(symbol, debug = False):
 		Retrieves dataframe with balance sheet
 		data available (for the last 10 years?)
 
-		Columns are:
-
 		Index is set to date
 	'''
-
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}')
 	balance_sheet_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in balance_sheet_value_list['financials']:
@@ -243,3 +244,43 @@ def get_balance_sheet(symbol, debug = False):
 	balance_sheet_values = balance_sheet_values.set_index('date')
 
 	return balance_sheet_values
+
+def get_debt_equity(symbol):
+	'''
+		Retrieves dataframe with debt and equity
+		and the debt/equity ratio
+
+		Index is set to date
+	'''
+	balance_sheet_values = get_balance_sheet(symbol)
+
+	try:
+		debt_equity = balance_sheet_values[['Total debt', 'Total shareholders equity']]
+		debt_equity = debt_equity[['Total debt','Total shareholders equity']].astype(float)
+		debt_equity['de_ratio'] = debt_equity['Total debt'] / debt_equity['Total shareholders equity']
+		return debt_equity
+	except:
+		return 0
+
+def get_net_income(symbol):
+	return 0
+
+def get_current_ratio(symbol):
+	'''
+		Retrieves dataframe with assets and liabilities
+		and the current ratio
+
+		Index is set to date
+	'''
+	balance_sheet_values = get_balance_sheet(symbol)
+	try:
+		current = balance_sheet_values[['Total current assets','Total current liabilities']].astype(float)
+		current['current_ratio'] = current['Total current assets'] / current['Total current liabilities']
+		return current
+	except:
+		return 0
+
+
+def get_current_quick_cash(symbol):
+	return 0
+	
