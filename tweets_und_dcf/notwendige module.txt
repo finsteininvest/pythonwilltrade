@@ -1,2 +1,2 @@
 fmp.py aus pythonwilltrade/fmp/
-
+pip install tweepy
