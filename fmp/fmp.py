@@ -16,7 +16,7 @@
 		- Neu get_balance_sheet
 	Reweitert: 
 		- Neue Funktionen
-		- Weiter Funktionen nutzen nun check_cache.
+		- Weitere Funktionen nutzen nun check_cache.
 
 	https://finsteininvest.pythonanywhere.com/
 	https://github.com/finsteininvest/pythonwilltrade/tree/master/fmp
@@ -53,7 +53,6 @@ def creation_date_today(path_to_file):
 			return False
 	else:
 		return False
-
 
 def check_cache(query):
 	'''
@@ -134,6 +133,18 @@ def get_historic_values(symbol, type, debug = False):
 
 	return historic_values
 
+def get_dcf(symbol):
+	'''
+		Gets latest DCF and price
+		Returns two values
+	'''
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/{symbol}')
+	historic_dcf = json.loads(r.text)
+	dcf = historic_dcf['dcf']
+	price = historic_dcf['Stock Price']
+
+	return dcf, price
+
 def get_historic_eps(symbol, debug=False):
 	'''
 		Retrieves a dataframe for eps
@@ -185,13 +196,16 @@ def get_historic_dividend(symbol, debug = False):
 	if debug == True:
 		for entry in historic_dividend_list['historical']:
 			print(entry['date'])
-	historic_dividend_values = pd.DataFrame.from_dict(historic_dividend_list['historical'])
-	historic_dividend_values = historic_dividend_values.sort_values(by=['date'])
-	historic_dividend_values = historic_dividend_values[['date', 'adjDividend']]
-	historic_dividend_values['date'] = pd.to_datetime(historic_dividend_values['date'])
-	historic_dividend_values = historic_dividend_values.set_index('date')
-	historic_dividend_values = historic_dividend_values.resample('Y').sum()
-	return historic_dividend_values
+	try:
+		historic_dividend_values = pd.DataFrame.from_dict(historic_dividend_list['historical'])
+		historic_dividend_values = historic_dividend_values.sort_values(by=['date'])
+		historic_dividend_values = historic_dividend_values[['date', 'adjDividend']]
+		historic_dividend_values['date'] = pd.to_datetime(historic_dividend_values['date'])
+		historic_dividend_values = historic_dividend_values.set_index('date')
+		historic_dividend_values = historic_dividend_values.resample('Y').sum()
+		return historic_dividend_values
+	except:
+		return 0
 
 def get_book_value_per_share(symbol, debug = False):
 	'''
