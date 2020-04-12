@@ -1,1 +1,2 @@
-fmp.py aus ...
+fmp.py aus pythonwilltrade/fmp/
+
