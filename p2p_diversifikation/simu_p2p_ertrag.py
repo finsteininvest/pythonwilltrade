@@ -11,9 +11,9 @@
 import random
 import matplotlib.pyplot as plt
 
-plattform_renditen = 					[0.08,0.08]
-plattform_ausfallwahrscheinlichkeiten = [0.07,0.07]
-invest_je_plattform = 					[500,500]
+plattform_ausfallwahrscheinlichkeiten = [0.07,0.07,0.3,0.3,0.3]
+plattform_renditen =                    [0.08,0.08,0.15,0.15,0.15]
+invest_je_plattform =                   [100,100,100,100,100]
 
 # Plausicheck
 
