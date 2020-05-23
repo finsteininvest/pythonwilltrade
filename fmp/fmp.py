@@ -121,7 +121,7 @@ def get_historic_values(symbol, type, debug = False):
 		- crypto/
 
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_list['historical']:
@@ -137,8 +137,9 @@ def get_dcf(symbol):
 	'''
 		Gets latest DCF and price
 		Returns two values
+		dcf, price
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_dcf = json.loads(r.text)
 	dcf = historic_dcf['dcf']
 	price = historic_dcf['Stock Price']
@@ -152,7 +153,7 @@ def get_historic_eps(symbol, debug=False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_eps_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_eps_list['financials']:
@@ -171,7 +172,7 @@ def get_historic_roe(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_roe_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_roe_value_list['metrics']:
@@ -191,7 +192,7 @@ def get_historic_dividend(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/{symbol}')
+	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_dividend_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_dividend_list['historical']:
@@ -214,7 +215,7 @@ def get_book_value_per_share(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}')
+	r = requests.get(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	historic_book_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_book_value_list['metrics']:
@@ -248,7 +249,7 @@ def get_balance_sheet(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
 	balance_sheet_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in balance_sheet_value_list['financials']:
@@ -294,7 +295,90 @@ def get_current_ratio(symbol):
 	except:
 		return 0
 
+def get_number_shares_outstanding(symbol):
+	'''
+		Retrieves dataframe with numbers of shares
+		over time
+
+		Index is set to date
+	'''
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/enterprise-value/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	outstanding_shares_list = json.loads(r.text)
+	try:
+		outstanding_shares_temp = pd.DataFrame.from_dict(outstanding_shares_list['enterpriseValues'])
+		outstanding_shares = outstanding_shares_temp[['date','Number of Shares']]
+		outstanding_shares = outstanding_shares.sort_values(by=['date'])
+		outstanding_shares = outstanding_shares.set_index('date')
+		return outstanding_shares
+	except:
+		return 0
+
+def get_earnings_before_tax(symbol):
+	'''
+		Retrieves dataframe with earnings before tax
+		over time
+
+		Index is set to date
+	'''
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	historic_earnings_list = json.loads(r.text)
+
+	historic_earnings_list_temp = pd.DataFrame.from_dict(historic_earnings_list['financials'])
+	historic_earnings = historic_earnings_list_temp.sort_values(by=['date'])
+	historic_earnings = historic_earnings[['date', 'Earnings before Tax']]
+	historic_earnings = historic_earnings.sort_values(by=['date'])
+	historic_earnings = historic_earnings.set_index('date')
+
+	return historic_earnings
 
 def get_current_quick_cash(symbol):
 	return 0
+
+
+def get_net_income(symbol):
+	'''
+		Retrieves a dataframe of net income.
+
+		Index is set to date
+	'''
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	historic_income_list = json.loads(r.text)
+
+	historic_income_list_temp = pd.DataFrame.from_dict(historic_income_list['financials'])
+	historic_income = historic_income_list_temp.sort_values(by=['date'])
+	historic_income = historic_income[['date', 'Net Income']]
+	historic_income = historic_income.sort_values(by=['date'])
+	historic_income = historic_income.set_index('date')
+
+	return historic_income
 	
+def get_price_earning_ratio(symbol):
+	'''
+		Retrieves a single value:
+		Price/Earnings ratio
+	'''
+	net_income = get_net_income(symbol)[-1:]
+	net_income = float(net_income.iloc[-1]['Net Income'])
+	prices = get_historic_values(symbol, type = '')
+	latest_close = float(prices[-1:]['close'])
+	num_shares = get_number_shares_outstanding(symbol)[-1:]
+	num_shares = float(num_shares.iloc[-1]['Number of Shares'])
+	earnings_per_share = net_income / num_shares
+	p_e = latest_close / earnings_per_share
+	return p_e
+
+def get_price_book_ratio(symbol):
+	'''
+		Retrieves a single value:
+		Price/Book Ratio
+	'''
+	symbol = symbol + '?period=quarter'
+	prices = get_historic_values(symbol, type = '')
+	latest_close = float(prices[-1:]['close'])
+	num_shares = get_number_shares_outstanding(symbol)[-1:]
+	num_shares = float(num_shares.iloc[-1]['Number of Shares'])
+	equity = get_debt_equity(symbol)
+	latest_equity = float(equity[-1:]['Total shareholders equity'])
+	book_value = latest_equity / num_shares
+	p_b = latest_close / book_value
+	return p_b
