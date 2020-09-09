@@ -35,6 +35,8 @@ import time
 import platform
 from pathlib import Path
 from datetime import date
+#from app import config
+import config
 
 def creation_date_today(path_to_file):
 	'''
@@ -81,7 +83,7 @@ def get_symbols_list(debug=False):
 			symbol, name, price, exchange
 		Index is set to symbol
 	'''
-	r = check_cache('https://financialmodelingprep.com/api/v3/company/stock/list')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/stock/list?apikey={config.apikey}')
 	symbolsList = json.loads(r.text)
 
 	if debug == True:
@@ -121,7 +123,7 @@ def get_historic_values(symbol, type, debug = False):
 		- crypto/
 
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/historical-price-full/{type}{symbol}?apikey={config.apikey}')
 	historic_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_list['historical']:
@@ -139,7 +141,7 @@ def get_dcf(symbol):
 		Returns two values
 		dcf, price
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/{symbol}?apikey={config.apikey}')
 	historic_dcf = json.loads(r.text)
 	dcf = historic_dcf['dcf']
 	price = historic_dcf['Stock Price']
@@ -153,7 +155,7 @@ def get_historic_eps(symbol, debug=False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey={config.apikey}')
 	historic_eps_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_eps_list['financials']:
@@ -172,7 +174,7 @@ def get_historic_roe(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey={config.apikey}')
 	historic_roe_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_roe_value_list['metrics']:
@@ -192,7 +194,7 @@ def get_historic_dividend(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/{symbol}?apikey={config.apikey}')
 	historic_dividend_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_dividend_list['historical']:
@@ -215,7 +217,7 @@ def get_book_value_per_share(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = requests.get(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = requests.get(f'https://financialmodelingprep.com/api/v3/company-key-metrics/{symbol}?apikey={config.apikey}')
 	historic_book_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in historic_book_value_list['metrics']:
@@ -249,7 +251,7 @@ def get_balance_sheet(symbol, debug = False):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/{symbol}?apikey={config.apikey}')
 	balance_sheet_value_list = json.loads(r.text)
 	if debug == True:
 		for entry in balance_sheet_value_list['financials']:
@@ -302,7 +304,7 @@ def get_number_shares_outstanding(symbol):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/enterprise-value/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/enterprise-value/{symbol}?apikey={config.apikey}')
 	outstanding_shares_list = json.loads(r.text)
 	try:
 		outstanding_shares_temp = pd.DataFrame.from_dict(outstanding_shares_list['enterpriseValues'])
@@ -320,7 +322,7 @@ def get_earnings_before_tax(symbol):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey={config.apikey}')
 	historic_earnings_list = json.loads(r.text)
 
 	historic_earnings_list_temp = pd.DataFrame.from_dict(historic_earnings_list['financials'])
@@ -341,7 +343,7 @@ def get_net_income(symbol):
 
 		Index is set to date
 	'''
-	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey=fd02372d10ae6e79e2f270de31bd55a6')
+	r = check_cache(f'https://financialmodelingprep.com/api/v3/financials/income-statement/{symbol}?apikey={config.apikey}')
 	historic_income_list = json.loads(r.text)
 
 	historic_income_list_temp = pd.DataFrame.from_dict(historic_income_list['financials'])
