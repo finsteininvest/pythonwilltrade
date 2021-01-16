@@ -32,7 +32,7 @@ def get_dividends_annual(ticker, years):
 	historical_dividends = historical_dividends.sort_values(by='date')
 	historical_dividends['date'] = pd.to_datetime(historical_dividends['date'])
 	historical_dividends = historical_dividends.set_index('date')
-	series_annual_dividends = historical_dividends.dividend.resample('Y').sum()
+	series_annual_dividends = historical_dividends.adjDividend.resample('Y').sum()
 
 	df_annual_dividends = series_annual_dividends.to_frame()
 	df_annual_dividends['growth'] = df_annual_dividends.pct_change()
