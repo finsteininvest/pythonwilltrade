@@ -41,17 +41,15 @@ Der Code zu einem Blogbeitrag befindet sich gesammelt in einem Verzeichnis mit d
 Navigiere in das Verzeichnis und klick auf die verschiedenen .py Deteien. Dann auf "RAW"; rechts, oberhalb der Datei. In einem Verzeichnis auf Deinem Rechner speichern. Das machst Du für alle Dateien, die mit .py enden.
 
 ## 4. Installiere notwendige Module
-In dem gleichen Verzeichnis findest Du auch eine Datei mit dem Namen "notwendige module.txt"
+In dem gleichen Verzeichnis findest Du auch eine Datei mit dem Namen "requirements.txt"
 
-In dieser findest Du Kommandos in der Art:
+Diese Datei beinhaltet die notwendigen Module. Und die Installation dieser Module ist denkbar einfach:
 
-- pip install ...
+pip install -r requirements.txt (auf der KLommandozeile eingeben)
 
-Mit pip installierst Du die notwendigen Bibliotheken, um meinen Code auszuführen.
-
-Auf der Kommandozeile musst Du jede einzelne Zeile eingeben und mit "Return" die Bibliothek installieren lassen. ** Nicht vergessen: vorher die virtuelle Umgebung aktivieren. **
+** Nicht vergessen: vorher die virtuelle Umgebung aktivieren. **
 
 ## 5. Code ausführen
 Im [Blog](https://finsteininvest.pythonanywhere.com/) steht in jedem Beitrag in welcher Reihenfolge, welches Programm ausgeführt werden soll.
 
-Dazu: python3 name_des_programms.py eingeben. Manchmal müssen noch Parameter eingegeben werden; aber das gebe ich Blogbeitrag an.
+Dazu: python3 name_des_programms.py eingeben. Manchmal müssen noch Parameter eingegeben werden; aber das gebe ich Blogbeitrag an. Statt python3 kann es auch sein, daß Du nur python eingeben musst.
