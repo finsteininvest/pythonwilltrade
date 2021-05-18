@@ -9,4 +9,4 @@ Erkannte Dokumente:
 - Ertragsgutschriften
 - Dividendengutschriften
 
-finsteininvest.pythonanywhere.com/...
+[finsteininvest.pythonanywhere.com](...)
