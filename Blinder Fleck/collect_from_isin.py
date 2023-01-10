@@ -25,7 +25,6 @@ def main(datei):
         file = open(f'{isin}.csv', "wb")
         file.write(response.content)
         file.close()
-        quit()
         time.sleep(5)
     return 0
 
